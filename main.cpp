@@ -5,9 +5,11 @@
 #include <GL/glfw.h>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
 #include <shader.hpp>
+#include <texture.hpp>
 
 int main(){
 
@@ -28,20 +30,42 @@ int main(){
         return -1;
     }
 
-    glfwSetWindowTitle( "Tutorial 01" );
+    glfwSetWindowTitle( "Sprite Test" );
 
     glfwEnable( GLFW_STICKY_KEYS );
 
-    glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-    GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+    GLuint programID = LoadShaders( "TransformVertexShader.vs", "TextureFragmentShader.fs" );
+
+    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
     GLuint vertexPosition_modelspaceID = glGetAttribLocation(programID, "vertexPosition_modelspace");
+    GLuint vertexUVID = glGetAttribLocation(programID, "vertexUV");
+
+    glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    glm::mat4 View       = glm::lookAt(
+                                glm::vec3(0,0,5),
+                                glm::vec3(0,0,0),
+                                glm::vec3(0,1,0)
+                           );
+    glm::mat4 Model      = glm::mat4(1.0f);
+    glm::mat4 MVP        = Projection * View * Model;
+
+    GLuint Texture = loadTGA_glfw("heart_sprite.tga");
+    GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
          1.0f, -1.0f, 0.0f,
-         0.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f, 0.0f,
+         1.0f, -1.0f, 0.0f,
+        -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f,
+    };
+
+    static const GLfloat g_uv_buffer_data[] = {
+        // a bunch of stuff
     };
 
     GLuint vertexbuffer;
@@ -49,9 +73,20 @@ int main(){
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
+    GLuint uvbuffer;
+    glGenBuffers(1, &uvbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+
     do{
         glClear( GL_COLOR_BUFFER_BIT );
         glUseProgram(programID);
+
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, Texture);
+        glUniform1i(TextureID, 0);
 
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -64,9 +99,21 @@ int main(){
             (void*)0            // array buffer offset
         );
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glVertexAttribPointer(
+            vertexUVID, // The attribute we want to configure
+            2,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void*)0            // array buffer offset
+        );
+
+        glDrawArrays(GL_TRIANGLES, 0, 2*3);
 
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         glfwSwapBuffers();
     }
     while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
