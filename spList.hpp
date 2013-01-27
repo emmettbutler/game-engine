@@ -25,6 +25,8 @@ class spList{
         void RemoveHead();
         void RemoveTail();
         void PrettyPrint();
+        void *GetHead();
+        void *GetTail();
     private:
         spListNode *head, *tail;
         int count;

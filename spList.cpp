@@ -48,14 +48,26 @@ void spList::RemoveHead(){
     spListNode *next= this->head->GetNext();
     delete this->head;
     this->head = next;
-    this->head->SetPrev(NULL);
+    if(this->head != NULL){
+        this->head->SetPrev(NULL);
+    }
 }
 
 void spList::RemoveTail(){
     spListNode *prev = this->tail->GetPrev();
     delete this->tail;
     this->tail = prev;
-    this->tail->SetNext(NULL);
+    if(this->tail != NULL){
+        this->tail->SetNext(NULL);
+    }
+}
+
+void *spList::GetHead(){
+    return this->head;
+}
+
+void *spList::GetTail(){
+    return this->tail;
 }
 
 spListNode::spListNode(void *data){
@@ -95,27 +107,8 @@ void spListNode::SetPrev(spListNode* prev){
 }
 
 char *spListNode::ToString(){
-    // TODO - figure out how to return better string representation
-    return (char *)this->data;
+    char *buffer = (char *)malloc(100 * sizeof(char));
+    sprintf(buffer, "<spListNode object at %p, data at %p>", this, this->data);
+    return buffer;
 }
 
-int main(int argc, char *argv[]){
-    spList *myList = new spList();
-    int a = 1, b = 2, c = 69;
-    printf("Testing linked list\n");
-    printf("Append an item\n");
-    myList->Append(&a);
-    myList->PrettyPrint();
-    printf("Append an item\n");
-    myList->Append(&b);
-    myList->PrettyPrint();
-    printf("Prepend an item\n");
-    myList->Prepend(&c);
-    myList->PrettyPrint();
-    printf("Remove tail\n");
-    myList->RemoveTail();
-    myList->PrettyPrint();
-    printf("Remove head\n");
-    myList->RemoveHead();
-    myList->PrettyPrint();
-}
