@@ -9,12 +9,11 @@ spList::spList(){
 
 void spList::PrettyPrint(){
     spListNode *node = this->head;
-    while(node != NULL){
-        printf("%s", node->ToString());
-        if(node->GetNext() != NULL){
-            printf(" -> ");
-        }
+    printf("%s", node->ToString());
+    while(node->GetNext() != NULL){
+        printf(" -> ");
         node = node->GetNext();
+        printf("%s", node->ToString());
     }
     printf("\n");
 }
@@ -27,6 +26,7 @@ void spList::Append(void *data){
     } else {
         this->head = inserting;
     }
+    inserting->SetPrev(this->tail);
     this->tail = inserting;
     this->count++;
 }
@@ -39,18 +39,23 @@ void spList::Prepend(void *data){
     } else {
         this->tail = inserting;
     }
+    inserting->SetNext(this->head);
     this->head = inserting;
     this->count++;
 }
 
 void spList::RemoveHead(){
+    spListNode *next= this->head->GetNext();
     delete this->head;
-    this->head = this->head->GetNext();
+    this->head = next;
+    this->head->SetPrev(NULL);
 }
 
 void spList::RemoveTail(){
+    spListNode *prev = this->tail->GetPrev();
     delete this->tail;
-    this->tail = this->tail->GetPrev();
+    this->tail = prev;
+    this->tail->SetNext(NULL);
 }
 
 spListNode::spListNode(void *data){
@@ -90,6 +95,7 @@ void spListNode::SetPrev(spListNode* prev){
 }
 
 char *spListNode::ToString(){
+    // TODO - figure out how to return better string representation
     return (char *)this->data;
 }
 
@@ -97,10 +103,19 @@ int main(int argc, char *argv[]){
     spList *myList = new spList();
     int a = 1, b = 2, c = 69;
     printf("Testing linked list\n");
+    printf("Append an item\n");
     myList->Append(&a);
     myList->PrettyPrint();
+    printf("Append an item\n");
     myList->Append(&b);
     myList->PrettyPrint();
+    printf("Prepend an item\n");
     myList->Prepend(&c);
+    myList->PrettyPrint();
+    printf("Remove tail\n");
+    myList->RemoveTail();
+    myList->PrettyPrint();
+    printf("Remove head\n");
+    myList->RemoveHead();
     myList->PrettyPrint();
 }
