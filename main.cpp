@@ -58,14 +58,20 @@ int main(){
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
          1.0f, -1.0f, 0.0f,
-        -1.0f,  1.0f, 0.0f,
+        -1.0f,  1.2f, 0.0f,
          1.0f, -1.0f, 0.0f,
-        -1.0f,  1.0f, 0.0f,
-         1.0f,  1.0f, 0.0f,
+        -1.0f,  1.2f, 0.0f,
+         1.0f,  1.2f, 0.0f,
     };
 
     static const GLfloat g_uv_buffer_data[] = {
-        // a bunch of stuff
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
     };
 
     GLuint vertexbuffer;
@@ -100,7 +106,7 @@ int main(){
         );
 
         glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
         glVertexAttribPointer(
             vertexUVID, // The attribute we want to configure
             2,                  // size
@@ -119,8 +125,12 @@ int main(){
     while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );
 
-    glfwTerminate();
     glDeleteBuffers(1, &vertexbuffer);
+    glDeleteBuffers(1, &uvbuffer);
+    glDeleteProgram(programID);
+    glDeleteTextures(1, &TextureID);
+
+    glfwTerminate();
 
     return 0;
 }
