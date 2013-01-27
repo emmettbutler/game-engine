@@ -11,6 +11,8 @@ using namespace glm;
 #include <shader.hpp>
 #include <texture.hpp>
 
+#include "Sprite.hpp"
+
 int main(){
 
     if( !glfwInit() ){
@@ -30,6 +32,8 @@ int main(){
         return -1;
     }
 
+    Sprite *mySprite = new Sprite(2.0f, 2.0f);
+
     glfwSetWindowTitle( "Sprite Test" );
 
     glfwEnable( GLFW_STICKY_KEYS );
@@ -44,34 +48,35 @@ int main(){
     GLuint vertexUVID = glGetAttribLocation(programID, "vertexUV");
 
     glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    //glm::mat4 Projection = glm::ortho(10.0f, 10.0f, 10.0f, 10.0f);
     glm::mat4 View       = glm::lookAt(
                                 glm::vec3(0,0,5),
                                 glm::vec3(0,0,0),
                                 glm::vec3(0,1,0)
                            );
-    glm::mat4 Model      = glm::mat4(1.0f);
+    glm::mat4 Model      = glm::translate(glm::mat4(1.0f), glm::vec3(0.9f, 0.0f, 0.0f));
     glm::mat4 MVP        = Projection * View * Model;
 
     GLuint Texture = loadTGA_glfw("heart_sprite.tga");
     GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
     static const GLfloat g_vertex_buffer_data[] = {
-        -1.0f, -1.0f, 0.0f,
-         1.0f, -1.0f, 0.0f,
-        -1.0f,  1.2f, 0.0f,
-         1.0f, -1.0f, 0.0f,
-        -1.0f,  1.2f, 0.0f,
-         1.0f,  1.2f, 0.0f,
+        -1.0f,-1.0f,0.0f,
+         1.0f,-1.0f,0.0f,
+        -1.0f, 1.0f,0.0f,
+         1.0f,-1.0f,0.0f,
+        -1.0f, 1.0f,0.0f,
+         1.0f, 1.0f,0.0f,
     };
 
+    // render a texture on a square
     static const GLfloat g_uv_buffer_data[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 1.0f,
-
-        1.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
+        0.0f,0.0f,
+        1.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
     };
 
     GLuint vertexbuffer;
