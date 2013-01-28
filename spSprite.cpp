@@ -18,5 +18,9 @@ glm::mat4 spSprite::GetTransform(){
 }
 
 void spSprite::Draw(){
-
+    // compute MVP
+    // create vertex and uv buffers in C++
+    // create corresponding buffers in OpenGL
+    // bind texture
+    // vertexattribarray and drawarray
 }
