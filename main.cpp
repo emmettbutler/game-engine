@@ -32,7 +32,7 @@ int main(){
         return -1;
     }
 
-    spSprite *mySprite = new spSprite(2.0f, 2.0f);
+    spSprite *mySprite = new spSprite(80.0f, 2.0f);
 
     glfwSetWindowTitle( "Sprite Test" );
     glfwEnable( GLFW_STICKY_KEYS );
@@ -49,7 +49,7 @@ int main(){
     glEnable(GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glm::mat4 Projection = glm::ortho(-1024.0f/10.0f, 1024.0f/10.0f, 768.0f/10.0f, -768.0f/10.0f, -5.0f, 5.0f);
+    glm::mat4 Projection = glm::ortho(-1024.0f/10.0f, 1024.0f/10.0f, -768.0f/10.0f, 768.0f/10.0f, -5.0f, 5.0f);
     glm::mat4 View       = glm::lookAt(
                                 glm::vec3(0,0,5),
                                 glm::vec3(0,0,0),

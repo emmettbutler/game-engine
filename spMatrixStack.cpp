@@ -15,7 +15,15 @@ glm::mat4 spMatrixStack::Pop(){
 }
 
 glm::mat4 spMatrixStack::CalculateTransform(){
-    return this->transform_list->GetHead()->GetData();
+    spListNode *node = this->transform_list->GetHead();
+    glm::mat4 model = node->GetData();
+    node = node->GetNext();
+    while(node->GetNext() != NULL){
+        model = model * node->GetData();
+        node = node->GetNext();
+    }
+    model = model * node->GetData();
+    return model;
 }
 
 void spMatrixStack::PrettyPrint(){
