@@ -1,32 +1,36 @@
 #include <stdlib.h>
 using namespace std;
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+using namespace glm;
+
 class spListNode{
     public:
-        spListNode(void *data);
-        spListNode(void *data, spListNode *prev, spListNode *next);
-        void *GetData();
-        void SetData(void *data);
+        spListNode(glm::mat4 data);
+        spListNode(glm::mat4 data, spListNode *prev, spListNode *next);
+        glm::mat4 GetData();
+        void SetData(glm::mat4 data);
         spListNode *GetNext();
         void SetNext(spListNode *next);
         spListNode *GetPrev();
         void SetPrev(spListNode *prev);
         char *ToString();
     private:
-        void *data;
+        glm::mat4 data;
         spListNode *next, *prev;
 };
 
 class spList{
     public:
         spList();
-        void Append(void *data);
-        void Prepend(void *data);
+        void Append(glm::mat4 data);
+        void Prepend(glm::mat4 data);
         void RemoveHead();
         void RemoveTail();
         void PrettyPrint();
-        void *GetHead();
-        void *GetTail();
+        spListNode *GetHead();
+        spListNode *GetTail();
     private:
         spListNode *head, *tail;
         int count;

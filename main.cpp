@@ -11,7 +11,7 @@ using namespace glm;
 #include <shader.hpp>
 #include <texture.hpp>
 
-#include "Sprite.hpp"
+#include "spSprite.hpp"
 
 int main(){
 
@@ -32,12 +32,11 @@ int main(){
         return -1;
     }
 
-    Sprite *mySprite = new Sprite(2.0f, 2.0f);
+    spSprite *mySprite = new spSprite(2.0f, 2.0f);
+    glm::mat4 Model = mySprite->GetTransform();
 
     glfwSetWindowTitle( "Sprite Test" );
-
     glfwEnable( GLFW_STICKY_KEYS );
-
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
     GLuint programID = LoadShaders( "TransformVertexShader.vs", "TextureFragmentShader.fs" );
@@ -54,7 +53,6 @@ int main(){
                                 glm::vec3(0,0,0),
                                 glm::vec3(0,1,0)
                            );
-    glm::mat4 Model      = glm::translate(glm::mat4(1.0f), glm::vec3(0.9f, 0.0f, 0.0f));
     glm::mat4 MVP        = Projection * View * Model;
 
     GLuint Texture = loadTGA_glfw("heart_sprite.tga");

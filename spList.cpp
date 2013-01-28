@@ -18,7 +18,7 @@ void spList::PrettyPrint(){
     printf("\n");
 }
 
-void spList::Append(void *data){
+void spList::Append(glm::mat4 data){
     spListNode *inserting = new spListNode(data);
     inserting->SetPrev(this->tail);
     if(this->tail != NULL){
@@ -31,7 +31,7 @@ void spList::Append(void *data){
     this->count++;
 }
 
-void spList::Prepend(void *data){
+void spList::Prepend(glm::mat4 data){
     spListNode *inserting = new spListNode(data);
     inserting->SetNext(this->head);
     if(this->head!= NULL){
@@ -62,31 +62,31 @@ void spList::RemoveTail(){
     }
 }
 
-void *spList::GetHead(){
+spListNode *spList::GetHead(){
     return this->head;
 }
 
-void *spList::GetTail(){
+spListNode *spList::GetTail(){
     return this->tail;
 }
 
-spListNode::spListNode(void *data){
+spListNode::spListNode(glm::mat4 data){
     this->data = data;
     this->next = NULL;
     this->prev = NULL;
 }
 
-spListNode::spListNode(void *data, spListNode *prev, spListNode *next){
+spListNode::spListNode(glm::mat4 data, spListNode *prev, spListNode *next){
     this->data = data;
     this->prev = prev;
     this->next = next;
 }
 
-void *spListNode::GetData(){
+glm::mat4 spListNode::GetData(){
     return this->data;
 }
 
-void spListNode::SetData(void *data){
+void spListNode::SetData(glm::mat4 data){
     this->data = data;
 }
 
@@ -108,7 +108,7 @@ void spListNode::SetPrev(spListNode* prev){
 
 char *spListNode::ToString(){
     char *buffer = (char *)malloc(100 * sizeof(char));
-    sprintf(buffer, "<spListNode object at %p, data at %p>", this, this->data);
+    sprintf(buffer, "<spListNode object at %p>", this);
     return buffer;
 }
 
