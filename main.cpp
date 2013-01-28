@@ -45,8 +45,11 @@ int main(){
     GLuint vertexPosition_modelspaceID = glGetAttribLocation(programID, "vertexPosition_modelspace");
     GLuint vertexUVID = glGetAttribLocation(programID, "vertexUV");
 
-    glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-    //glm::mat4 Projection = glm::ortho(10.0f, 10.0f, 10.0f, 10.0f);
+    // enable transparent sprites
+    glEnable(GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glm::mat4 Projection = glm::ortho(-1024.0f/10.0f, 1024.0f/10.0f, 768.0f/10.0f, -768.0f/10.0f, -5.0f, 5.0f);
     glm::mat4 View       = glm::lookAt(
                                 glm::vec3(0,0,5),
                                 glm::vec3(0,0,0),
