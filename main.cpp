@@ -33,7 +33,6 @@ int main(){
     }
 
     spSprite *mySprite = new spSprite(2.0f, 2.0f);
-    glm::mat4 Model = mySprite->GetTransform();
 
     glfwSetWindowTitle( "Sprite Test" );
     glfwEnable( GLFW_STICKY_KEYS );
@@ -53,6 +52,7 @@ int main(){
                                 glm::vec3(0,0,0),
                                 glm::vec3(0,1,0)
                            );
+    glm::mat4 Model      = mySprite->GetTransform();
     glm::mat4 MVP        = Projection * View * Model;
 
     GLuint Texture = loadTGA_glfw("heart_sprite.tga");

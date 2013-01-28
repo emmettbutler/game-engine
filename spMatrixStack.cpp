@@ -14,6 +14,10 @@ glm::mat4 spMatrixStack::Pop(){
     return popped;
 }
 
+glm::mat4 spMatrixStack::CalculateTransform(){
+    return this->transform_list->GetHead()->GetData();
+}
+
 void spMatrixStack::PrettyPrint(){
     this->transform_list->PrettyPrint();
 }
