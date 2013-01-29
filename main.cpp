@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <GL/glew.h>
 #include <GL/glfw.h>
@@ -48,26 +49,37 @@ int main(){
     glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
     glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
 
-    spSprite *mySprite = new spSprite(viewWidth/2, viewHeight/2);
-    spSprite *mySprite2 = new spSprite(viewWidth/4, viewHeight/4);
-    spSprite *mySprite3 = new spSprite(viewWidth/8, viewHeight/8);
+    srand(time(NULL));
+    spSprite *sprites[500] = {0};
+    int i = 0;
 
     do{
         glClear(GL_COLOR_BUFFER_BIT);
 
         glm::mat4 viewProjection = Projection * View;
-        mySprite->Draw(viewProjection);
-        mySprite2->Draw(viewProjection);
-        mySprite3->Draw(viewProjection);
+
+        sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
+        if(i < 500){
+            i++;
+        } else {
+            i = 0;
+        }
+
+        for(int j = 0; j < 500; j++){
+            if(sprites[j] != NULL){
+                sprites[j]->Draw(viewProjection);
+            }
+        }
 
         glfwSwapBuffers();
-    }
-    while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
+    } while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );
 
-    mySprite->Dealloc();
-    mySprite2->Dealloc();
-    mySprite3->Dealloc();
+    for(int j = 0; j < 500; j++){
+        if(sprites[j] != NULL){
+            sprites[j]->Dealloc();
+        }
+    }
 
     glfwTerminate();
 
