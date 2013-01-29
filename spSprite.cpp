@@ -57,6 +57,12 @@ spSprite::spSprite(float x, float y){
     this->transformStack->Push(trans);
 }
 
+void spSprite::SetTransform(float xTrans, float yTrans, float angle){
+    this->transformStack->Pop();
+    glm::mat4 trans = spm::translation(glm::vec3(xTrans, yTrans, 0.0f));
+    this->transformStack->Push(trans);
+}
+
 glm::mat4 spSprite::GetTransform(){
     // TODO - this stack thing should probably be replaced by a vanilla "GetTransform"
     return this->transformStack->CalculateTransform();

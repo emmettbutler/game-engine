@@ -12,6 +12,7 @@ class spSprite{
         spSprite(float x, float y);
         spSprite(float x, float y, float width, float height);
         void Draw(glm::mat4 viewProjection);
+        void SetTransform(float xTrans, float yTrans, float angle);
         glm::mat4 GetTransform();
         void Dealloc();
     private:
