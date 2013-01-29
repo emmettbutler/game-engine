@@ -57,6 +57,7 @@ spSprite::spSprite(float x, float y){
 }
 
 glm::mat4 spSprite::GetTransform(){
+    // TODO - this stack thing should probably be replaced by a vanilla "GetTransform"
     return this->transformStack->CalculateTransform();
 }
 
