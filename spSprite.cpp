@@ -3,7 +3,7 @@
 using namespace spm;
 
 void spSprite::init(){
-    this->shaderID = LoadShaders( "shaders/TransformVertexShader.vs", "shaders/TextureFragmentShader.fs" );
+    this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
 
     const GLfloat g_vertex_buffer_data[] = {
         -1.0f,-1.0f,0.0f,
