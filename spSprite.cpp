@@ -83,3 +83,10 @@ void spSprite::Draw(glm::mat4 viewProjection){
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 }
+
+void spSprite::Dealloc(){
+    glDeleteBuffers(1, &this->vertexbuffer);
+    glDeleteBuffers(1, &this->uvbuffer);
+    glDeleteProgram(this->shaderID);
+    glDeleteTextures(1, &this->TextureID);
+}

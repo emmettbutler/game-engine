@@ -13,6 +13,7 @@ class spSprite{
         spSprite(float x, float y, float width, float height);
         void Draw(glm::mat4 viewProjection);
         glm::mat4 GetTransform();
+        void Dealloc();
     private:
         void init();
         spMatrixStack *transformStack;
