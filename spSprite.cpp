@@ -1,5 +1,6 @@
 #include "spSprite.hpp"
 #include "spMatrixTransform.hpp"
+using namespace spm;
 
 void spSprite::init(){
     this->shaderID = LoadShaders( "shaders/TransformVertexShader.vs", "shaders/TextureFragmentShader.fs" );
@@ -52,7 +53,7 @@ spSprite::spSprite(float x, float y){
     glm::mat4 Model = glm::mat4(1.0f);
     this->transformStack->Push(Model);
 
-    glm::mat4 trans = spTranslation(glm::vec3(x, y, 0.0f));
+    glm::mat4 trans = spm::translation(glm::vec3(x, y, 0.0f));
     this->transformStack->Push(trans);
 }
 
