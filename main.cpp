@@ -41,7 +41,7 @@ int main(){
     glfwEnable( GLFW_STICKY_KEYS );
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-    GLuint programID = LoadShaders( "TransformVertexShader.vs", "TextureFragmentShader.fs" );
+    GLuint programID = LoadShaders( "shaders/TransformVertexShader.vs", "shaders/TextureFragmentShader.fs" );
 
     GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
@@ -61,7 +61,7 @@ int main(){
     glm::mat4 Model      = mySprite->GetTransform();
     glm::mat4 MVP        = Projection * View * Model;
 
-    GLuint Texture = loadTGA_glfw("heart_sprite.tga");
+    GLuint Texture = loadTGA_glfw("textures/heart_sprite.tga");
     GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
     static const GLfloat g_vertex_buffer_data[] = {
