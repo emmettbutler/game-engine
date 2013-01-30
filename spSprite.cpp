@@ -55,9 +55,8 @@ spSprite::spSprite(float x, float y){
 }
 
 void spSprite::SetTransform(float xTrans, float yTrans, float angle){
-    // pass
-    // create a translation matrix, scale matrix
-    // store them in this->translation...
+    // TODO - add rotation
+    this->translation = spm::translation(glm::vec3(xTrans, yTrans, 0.0f));
 }
 
 glm::mat4 spSprite::GetTransform(){
