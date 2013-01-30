@@ -17,7 +17,7 @@ class spSprite{
         void Dealloc();
     private:
         void init();
-        spMatrixStack *transformStack;
+        glm::mat4 translation, rotation, scale;
 
         float x, y, height, width;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;

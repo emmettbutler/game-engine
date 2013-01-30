@@ -48,24 +48,20 @@ spSprite::spSprite(float x, float y){
     this->init();
     this->x = x;
     this->y = y;
-    this->transformStack = new spMatrixStack();
 
-    glm::mat4 Model = glm::mat4(1.0f);
-    this->transformStack->Push(Model);
-
-    glm::mat4 trans = spm::translation(glm::vec3(x, y, 0.0f));
-    this->transformStack->Push(trans);
+    this->translation = spm::translation(glm::vec3(x, y, 0.0f));
+    this->rotation = glm::mat4(1.0f);
+    this->scale = spm::scale(glm::vec3(1.0f, 1.0f, 0.0f));
 }
 
 void spSprite::SetTransform(float xTrans, float yTrans, float angle){
-    this->transformStack->Pop();
-    glm::mat4 trans = spm::translation(glm::vec3(xTrans, yTrans, 0.0f));
-    this->transformStack->Push(trans);
+    // pass
+    // create a translation matrix, scale matrix
+    // store them in this->translation...
 }
 
 glm::mat4 spSprite::GetTransform(){
-    // TODO - this stack thing should probably be replaced by a vanilla "GetTransform"
-    return this->transformStack->CalculateTransform();
+    return this->translation * this->rotation * this->scale;
 }
 
 void spSprite::Draw(glm::mat4 viewProjection){
