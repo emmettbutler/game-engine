@@ -1,10 +1,11 @@
 #include "spMatrixTransform.hpp"
 
 namespace spm{
-    glm::mat4 translation(glm::vec3 translation){
-        float xTrans = translation[0];
-        float yTrans = translation[1];
-        return glm::mat4(
+    // TODO - make the parameters const?
+    spm::mat4 translation(spm::vec3 translation){
+        float xTrans = translation.m[0];
+        float yTrans = translation.m[1];
+        return spm::mat4(
                     1.0f, 0.0f, 0.0f, 0.0f,
                     0.0f, 1.0f, 0.0f, 0.0f,
                     0.0f, 0.0f, 1.0f, 0.0f,
@@ -12,10 +13,10 @@ namespace spm{
                 );
     }
 
-    glm::mat4 scale(glm::vec3 scale){
-        float xScale = scale[0];
-        float yScale = scale[1];
-        return glm::mat4(
+    spm::mat4 scale(spm::vec3 scale){
+        float xScale = scale.m[0];
+        float yScale = scale.m[1];
+        return spm::mat4(
                     xScale, 0.0f, 0.0f, 0.0f,
                     0.0f, yScale, 0.0f, 0.0f,
                     0.0f, 0.0f, 1.0f, 0.0f,

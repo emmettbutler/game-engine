@@ -1,6 +1,4 @@
 #include "spSprite.hpp"
-#include "spMatrixTransform.hpp"
-using namespace spm;
 
 void spSprite::init(){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
@@ -49,32 +47,32 @@ spSprite::spSprite(float x, float y){
     this->x = x;
     this->y = y;
 
-    this->translation = spm::translation(glm::vec3(x, y, 0.0f));
-    this->rotation = glm::mat4(1.0f);
-    this->scale = spm::scale(glm::vec3(1.0f, 1.0f, 0.0f));
+    this->translation = spm::translation(spm::vec3(x, y, 0.0f));
+    this->rotation = spm::mat4(1.0f);
+    this->scale = spm::scale(spm::vec3(1.0f, 1.0f, 0.0f));
 }
 
 void spSprite::SetTransform(float xTrans, float yTrans, float angle){
     // TODO - add rotation
-    this->translation = spm::translation(glm::vec3(xTrans, yTrans, 0.0f));
+    this->translation = spm::translation(spm::vec3(xTrans, yTrans, 0.0f));
 }
 
-glm::mat4 spSprite::GetTransform(){
+spm::mat4 spSprite::GetTransform(){
     return this->translation * this->rotation * this->scale;
 }
 
 void spSprite::SetScale(const float xScale, const float yScale){
     this->xScale = xScale;
     this->yScale = yScale;
-    this->scale = spm::scale(glm::vec3(this->xScale, this->yScale, 0.0f));
+    this->scale = spm::scale(spm::vec3(this->xScale, this->yScale, 0.0f));
 }
 
-glm::vec3 spSprite::GetScale(){
+spm::vec3 spSprite::GetScale(){
     // TODO - stop using 3d vectors for this stuff, write own vector classes
-    return glm::vec3(this->xScale, this->yScale, 0.0f);
+    return spm::vec3(this->xScale, this->yScale, 0.0f);
 }
 
-void spSprite::Draw(glm::mat4 viewProjection){
+void spSprite::Draw(spm::mat4 viewProjection){
     glUseProgram(this->shaderID);
 
     this->MVP = viewProjection * this->GetTransform();

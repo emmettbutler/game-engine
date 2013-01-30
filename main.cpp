@@ -5,10 +5,6 @@
 #include <GL/glew.h>
 #include <GL/glfw.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
-
 #include <shader.hpp>
 #include <texture.hpp>
 
@@ -40,9 +36,9 @@ int setupWindow(const float windowWidth, const float windowHeight){
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-glm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
-    glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
-    glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
+spm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
+    spm::mat4 Projection = spm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
+    spm::mat4 View = spm::lookAt(spm::vec3(0,0,5), spm::vec3(0,0,0), spm::vec3(0,1,0));
     return Projection * View;
 }
 
@@ -58,7 +54,7 @@ int main(){
     const float viewWidth = windowWidth/5.0f;
     const float viewHeight = windowHeight/5.0f;
 
-    glm::mat4 viewProjection = calculateViewProjection(viewWidth, viewHeight);
+    spm::mat4 viewProjection = calculateViewProjection(viewWidth, viewHeight);
 
     srand(time(NULL));
     int numSprites = 100;
@@ -69,7 +65,7 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(sprites[i] != NULL){
-            glm::vec3 myScale = sprites[i]->GetScale();
+            spm::vec3 myScale = sprites[i]->GetScale();
             sprites[i]->SetScale(2.0 * (i % 5), 2.0 * (i % 5));
         } else {
             sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);

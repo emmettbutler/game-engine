@@ -5,24 +5,26 @@
 #include <texture.hpp>
 
 #include "spMatrixStack.hpp"
+#include "spMatrixTransform.hpp"
+using namespace spm;
 
 class spSprite{
     public:
         spSprite();
         spSprite(float x, float y);
         spSprite(float x, float y, float width, float height);
-        void Draw(glm::mat4 viewProjection);
+        void Draw(spm::mat4 viewProjection);
         void SetTransform(float xTrans, float yTrans, float angle);
-        glm::mat4 GetTransform();
+        spm::mat4 GetTransform();
         void SetScale(const float xScale, const float yScale);
-        glm::vec3 GetScale();
+        spm::vec3 GetScale();
         void Dealloc();
     private:
         void init();
-        glm::mat4 translation, rotation, scale;
+        spm::mat4 translation, rotation, scale;
 
         float x, y, height, width, xScale, yScale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, Texture, TextureID, MVPID;
-        glm::mat4 MVP;
+        spm::mat4 MVP;
 };
