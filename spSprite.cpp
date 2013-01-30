@@ -63,6 +63,17 @@ glm::mat4 spSprite::GetTransform(){
     return this->translation * this->rotation * this->scale;
 }
 
+void spSprite::SetScale(const float xScale, const float yScale){
+    this->xScale = xScale;
+    this->yScale = yScale;
+    this->scale = spm::scale(glm::vec3(this->xScale, this->yScale, 0.0f));
+}
+
+glm::vec3 spSprite::GetScale(){
+    // TODO - stop using 3d vectors for this stuff, write own vector classes
+    return glm::vec3(this->xScale, this->yScale, 0.0f);
+}
+
 void spSprite::Draw(glm::mat4 viewProjection){
     glUseProgram(this->shaderID);
 

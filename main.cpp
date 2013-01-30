@@ -69,9 +69,11 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(sprites[i] != NULL){
-            sprites[i]->Dealloc();
+            glm::vec3 myScale = sprites[i]->GetScale();
+            sprites[i]->SetScale(2.0 * (i % 5), 2.0 * (i % 5));
+        } else {
+            sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
         }
-        sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
         if(i < numSprites){
             i++;
         } else {
@@ -91,6 +93,8 @@ int main(){
     for(int j = 0; j < numSprites; j++){
         if(sprites[j] != NULL){
             sprites[j]->Dealloc();
+            delete sprites[j];
+            sprites[j] = NULL;
         }
     }
 
