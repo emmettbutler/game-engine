@@ -14,15 +14,11 @@ using namespace glm;
 
 #include "spSprite.hpp"
 
-int main(){
-
+int setupWindow(const float windowWidth, const float windowHeight){
     if( !glfwInit() ){
         fprintf( stderr, "Failed to initialize GLFW\n" );
         return -1;
     }
-
-    const float windowWidth = 1024.0f;
-    const float windowHeight = 768.0f;
 
     if( !glfwOpenWindow(windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) ){
         fprintf( stderr, "Failed to open GLFW window\n" );
@@ -36,18 +32,33 @@ int main(){
         return -1;
     }
 
-    const float viewWidth = windowWidth/5.0f;
-    const float viewHeight = windowHeight/5.0f;
-
     glfwSetWindowTitle( "Sprite Test" );
     glfwEnable( GLFW_STICKY_KEYS );
 
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
+glm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
     glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
     glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
+    return Projection * View;
+}
+
+int main(){
+
+    const float windowWidth = 1024.0f;
+    const float windowHeight = 768.0f;
+
+    if(setupWindow(windowWidth, windowHeight) == -1){
+        return -1;
+    };
+
+    const float viewWidth = windowWidth/5.0f;
+    const float viewHeight = windowHeight/5.0f;
+
+    glm::mat4 viewProjection = calculateViewProjection(viewWidth, viewHeight);
 
     srand(time(NULL));
     int numSprites = 100;
@@ -56,8 +67,6 @@ int main(){
 
     do{
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glm::mat4 viewProjection = Projection * View;
 
         if(sprites[i] != NULL){
             sprites[i]->Dealloc();
