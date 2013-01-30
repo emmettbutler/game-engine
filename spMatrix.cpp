@@ -128,7 +128,6 @@ const mat4 mat4::operator*(const vec3 &other) const{
     result.m[3][2] *= other.m[2];
     result.m[3][3] *= 1.0f;
 
-    result.prettyPrint();
     return result;
 }
 
@@ -212,11 +211,13 @@ int main(int argc, char *argv[]){
     spm::vec3 b(2.0f, 3.0f, 4.0f);
 
     a.prettyPrint();
+    printf("*\n");
     b.prettyPrint();
 
     c = a * b;
 
-    mat4(c).prettyPrint();
+    printf("=\n");
+    c.prettyPrint();
 
-    assert(c.m[0][0] == 4.0f);
+    assert(c.m[2][2] == 4.0f);
 }
