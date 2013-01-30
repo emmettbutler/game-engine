@@ -50,7 +50,8 @@ int main(){
     glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
 
     srand(time(NULL));
-    spSprite *sprites[500] = {0};
+    int numSprites = 100;
+    spSprite *sprites[100] = {0};
     int i = 0;
 
     do{
@@ -58,14 +59,17 @@ int main(){
 
         glm::mat4 viewProjection = Projection * View;
 
+        if(sprites[i] != NULL){
+            sprites[i]->Dealloc();
+        }
         sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
-        if(i < 500){
+        if(i < numSprites){
             i++;
         } else {
             i = 0;
         }
 
-        for(int j = 0; j < 500; j++){
+        for(int j = 0; j < numSprites; j++){
             if(sprites[j] != NULL){
                 sprites[j]->Draw(viewProjection);
             }
@@ -75,7 +79,7 @@ int main(){
     } while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );
 
-    for(int j = 0; j < 500; j++){
+    for(int j = 0; j < numSprites; j++){
         if(sprites[j] != NULL){
             sprites[j]->Dealloc();
         }
