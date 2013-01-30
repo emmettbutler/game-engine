@@ -16,24 +16,18 @@ $(MAIN).o : main.cpp
 	$(CXX) -g $(INCDIRS) -c main.cpp -o $(MAIN).o
 
 externals : shader.o texture.o
-
-splib : spSprite.o spMatrixStack.o spMatrixTransform.o spList.o
-
 shader.o : common/shader.cpp
 	$(CXX) -g $(INCDIRS) -c common/shader.cpp
-
 texture.o : common/texture.cpp
 	$(CXX) -g $(INCDIRS) -c common/texture.cpp
 
+splib : spSprite.o spMatrixStack.o spMatrixTransform.o spList.o
 spSprite.o : spSprite.cpp
 	$(CXX) -g $(INCDIRS) -c spSprite.cpp
-
 spMatrixStack.o : spMatrixStack.cpp
 	$(CXX) -g $(INCDIRS) -c spMatrixStack.cpp
-
 spMatrixTransform.o : spMatrixTransform.cpp
 	$(CXX) -g $(INCDIRS) -c spMatrixTransform.cpp
-
 spList.o : spList.cpp
 	$(CXX) -g $(INCDIRS) -c spList.cpp
 
