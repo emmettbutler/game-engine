@@ -26,6 +26,28 @@ mat4::mat4(){
     m[3][3] = 1.0f;
 }
 
+mat4::mat4(const float scaler){
+    m[0][0] = scaler;
+    m[0][1] = 0.0f;
+    m[0][2] = 0.0f;
+    m[0][3] = 0.0f;
+
+    m[1][0] = 0.0f;
+    m[1][1] = scaler;
+    m[1][2] = 0.0f;
+    m[1][3] = 0.0f;
+
+    m[2][0] = 0.0f;
+    m[2][1] = 0.0f;
+    m[2][2] = scaler;
+    m[2][3] = 0.0f;
+
+    m[3][0] = 0.0f;
+    m[3][1] = 0.0f;
+    m[3][2] = 0.0f;
+    m[3][3] = scaler;
+}
+
 mat4::mat4(const float x1, const float y1, const float z1, const float w1,
     const float x2, const float y2, const float z2, const float w2,
     const float x3, const float y3, const float z3, const float w3,
@@ -54,14 +76,31 @@ mat4::mat4(const float x1, const float y1, const float z1, const float w1,
 // operator overloads
 mat4& mat4::operator=(const mat4 &rhs){
     if (this != &rhs){
-        // do deallocation. etc
+        this->m[0][0] = rhs.m[0][0];
+        this->m[0][1] = rhs.m[0][1];
+        this->m[0][2] = rhs.m[0][2];
+        this->m[0][3] = rhs.m[0][3];
+
+        this->m[1][0] = rhs.m[1][0];
+        this->m[1][1] = rhs.m[1][1];
+        this->m[1][2] = rhs.m[1][2];
+        this->m[1][3] = rhs.m[1][3];
+
+        this->m[2][0] = rhs.m[2][0];
+        this->m[2][1] = rhs.m[2][1];
+        this->m[2][2] = rhs.m[2][2];
+        this->m[2][3] = rhs.m[2][3];
+
+        this->m[3][0] = rhs.m[3][0];
+        this->m[3][1] = rhs.m[3][1];
+        this->m[3][2] = rhs.m[3][2];
+        this->m[3][3] = rhs.m[3][3];
     }
     return *this;
 }
 
 const mat4 mat4::operator*(const mat4 &other) const{
     // cross product between 2 4x4 matrices
-    printf("Product!\n");
     mat4 result = *this;
     return result;
 }
@@ -88,6 +127,8 @@ const mat4 mat4::operator*(const vec3 &other) const{
     result.m[3][1] *= other.m[1];
     result.m[3][2] *= other.m[2];
     result.m[3][3] *= 1.0f;
+
+    result.prettyPrint();
     return result;
 }
 
@@ -117,7 +158,6 @@ const mat4 mat4::operator*(const vec2 &other) const{
 }
 
 bool mat4::operator==(const mat4 &other) const{
-    printf("Comparison!\n");
     if(m[0][0] == other.m[0][0]){
         return true;
     }
@@ -126,6 +166,17 @@ bool mat4::operator==(const mat4 &other) const{
 
 bool mat4::operator!=(const mat4 &other) const{
     return !(*this == other);
+}
+
+void mat4::prettyPrint(){
+    for(int i = 0; i < 4; i++){
+        printf("| ");
+        for(int j = 0; j < 4; j++){
+            printf("%0.2f ", m[i][j]);
+        }
+        printf("|\n");
+    }
+    printf("\n");
 }
 
 // end @implementation mat4
@@ -146,13 +197,26 @@ vec3::vec3(const float x, const float y, const float z){
     m[3] = 1.0f;
 }
 
+void vec3::prettyPrint(){
+    printf("| ");
+    for(int i = 0; i < 3; i++){
+        printf("%0.2f ", m[i]);
+    }
+    printf("|\n\n");
+}
+
 // end @implementation vec3
 
 int main(int argc, char *argv[]){
-    spm::mat4 a, c;
-    spm::vec3 b;
+    spm::mat4 a(1.0), c;
+    spm::vec3 b(2.0f, 3.0f, 4.0f);
+
+    a.prettyPrint();
+    b.prettyPrint();
 
     c = a * b;
 
-    assert(a.m[0][0] == 1.0f);
+    mat4(c).prettyPrint();
+
+    assert(c.m[0][0] == 4.0f);
 }
