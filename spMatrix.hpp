@@ -3,6 +3,15 @@
 #include <assert.h>
 
 namespace spm{
+    class vec4{
+        public:
+            vec4();
+            vec4(const float x, const float y, const float z, const float w);
+            const float operator*(const vec4 &other) const;
+            void prettyPrint();
+            float m[4];
+    };
+
     class vec3{
         public:
             vec3();

@@ -37,9 +37,46 @@ int setupWindow(const float windowWidth, const float windowHeight){
 }
 
 spm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
-    spm::mat4 Projection = spm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
-    spm::mat4 View = spm::lookAt(spm::vec3(0,0,5), spm::vec3(0,0,0), spm::vec3(0,1,0));
-    return Projection * View;
+    glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
+    glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
+    /*printf("their view\n");
+    for(int i = 0; i < 4; i++){
+        printf("| ");
+        for(int j = 0; j < 4; j++){
+            printf("%0.2f ", View[i][j]);
+        }
+        printf(" |\n");
+    }
+
+    printf("their projection\n");
+    for(int i = 0; i < 4; i++){
+        printf("| ");
+        for(int j = 0; j < 4; j++){
+            printf("%0.2f ", Projection[i][j]);
+        }
+        printf(" |\n");
+    }*/
+    spm::mat4 myProjection = spm::mat4(
+        Projection[0][0], Projection[1][0], Projection[2][0], Projection[3][0],
+        Projection[0][1], Projection[1][1], Projection[2][1], Projection[3][1],
+        Projection[0][2], Projection[1][2], Projection[2][2], Projection[3][2],
+        Projection[0][3], Projection[1][3], Projection[2][3], Projection[3][3]
+            );
+
+    spm::mat4 myView = spm::mat4(
+        View[0][0], View[1][0], View[2][0], View[3][0],
+        View[0][1], View[1][1], View[2][1], View[3][1],
+        View[0][2], View[1][2], View[2][2], View[3][2],
+        View[0][3], View[1][3], View[2][3], View[3][3]
+            );
+    printf("my view\n");
+    myView.prettyPrint();
+    printf("my projection\n");
+    myProjection.prettyPrint();
+
+    spm::mat4 viewProjection;
+    viewProjection = myProjection * myView;
+    return viewProjection;
 }
 
 int main(){

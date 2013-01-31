@@ -6,10 +6,10 @@ namespace spm{
         float xTrans = translation.m[0];
         float yTrans = translation.m[1];
         return spm::mat4(
-                    1.0f, 0.0f, 0.0f, 0.0f,
-                    0.0f, 1.0f, 0.0f, 0.0f,
+                    1.0f, 0.0f, 0.0f, xTrans,
+                    0.0f, 1.0f, 0.0f, yTrans,
                     0.0f, 0.0f, 1.0f, 0.0f,
-                    xTrans, yTrans, 0.0f, 1.0f
+                    0.0f, 0.0f, 0.0f, 1.0f
                 );
     }
 
