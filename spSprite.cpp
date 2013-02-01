@@ -36,6 +36,9 @@ void spSprite::init(){
 
     this->Texture = loadTGA_glfw("textures/heart_sprite.tga");
     this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
+
+    this->shrink_filter = GL_NEAREST;
+    this->exp_filter = GL_NEAREST;
 }
 
 spSprite::spSprite(){
@@ -84,7 +87,10 @@ void spSprite::Draw(spm::mat4 viewProjection){
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, Texture);
-    glUniform1i(TextureID, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->shrink_filter);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->exp_filter);
+        glUniform1i(TextureID, 0);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);

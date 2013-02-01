@@ -83,7 +83,7 @@ int main(){
         if(sprites[i] != NULL){
             spm::vec2 myScale;
             myScale = sprites[i]->GetScale();
-            sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.1f, myScale.m[1] * 1.1f));
+            sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.8f, myScale.m[1] * 1.8f));
         } else {
             sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
         }

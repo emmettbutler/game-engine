@@ -27,5 +27,6 @@ class spSprite{
         spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, Texture, TextureID, MVPID;
+        GLuint shrink_filter, exp_filter;
         spm::mat4 MVP;
 };
