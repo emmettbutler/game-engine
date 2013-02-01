@@ -138,7 +138,7 @@ bool mat4::operator!=(const mat4 &other) const{
     return !(*this == other);
 }
 
-void mat4::prettyPrint(){
+void mat4::pp(){
     for(int i = 0; i < 4; i++){
         printf("| ");
         for(int j = 0; j < 4; j++){
@@ -149,9 +149,23 @@ void mat4::prettyPrint(){
     printf("\n");
 }
 
-// end @implementation mat4
+vec2::vec2(){
+    m[0] = 1.0f;
+    m[1] = 1.0f;
+}
 
-// @implementation vec3
+vec2::vec2(const float x, const float y){
+    m[0] = x;
+    m[1] = y;
+}
+
+void vec2::pp(){
+    printf("| ");
+    for(int i = 0; i < 2; i++){
+        printf("%0.2f ", m[i]);
+    }
+    printf("|\n\n");
+}
 
 vec3::vec3(){
     m[0] = 1.0f;
@@ -167,7 +181,7 @@ vec3::vec3(const float x, const float y, const float z){
     m[3] = 1.0f;
 }
 
-void vec3::prettyPrint(){
+void vec3::pp(){
     printf("| ");
     for(int i = 0; i < 3; i++){
         printf("%0.2f ", m[i]);

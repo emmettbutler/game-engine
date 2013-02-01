@@ -14,16 +14,17 @@ class spSprite{
         spSprite(float x, float y);
         spSprite(float x, float y, float width, float height);
         void Draw(spm::mat4 viewProjection);
-        void SetTransform(float xTrans, float yTrans, float angle);
+        void SetTransform(spm::vec2 position, float angle);
         spm::mat4 GetTransform();
-        void SetScale(const float xScale, const float yScale);
-        spm::vec3 GetScale();
+        void SetScale(spm::vec2 newScale);
+        spm::vec2 GetScale();
         void Dealloc();
     private:
         void init();
-        spm::mat4 translation, rotation, scale;
+        spm::mat4 translation, rotation, scale_mat;
 
-        float x, y, height, width, xScale, yScale;
+        float x, y, height, width;
+        spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, Texture, TextureID, MVPID;
         spm::mat4 MVP;

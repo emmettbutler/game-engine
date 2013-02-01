@@ -39,23 +39,6 @@ int setupWindow(const float windowWidth, const float windowHeight){
 spm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
     glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
     glm::mat4 View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
-    /*printf("their view\n");
-    for(int i = 0; i < 4; i++){
-        printf("| ");
-        for(int j = 0; j < 4; j++){
-            printf("%0.2f ", View[i][j]);
-        }
-        printf(" |\n");
-    }
-
-    printf("their projection\n");
-    for(int i = 0; i < 4; i++){
-        printf("| ");
-        for(int j = 0; j < 4; j++){
-            printf("%0.2f ", Projection[i][j]);
-        }
-        printf(" |\n");
-    }*/
     spm::mat4 myProjection = spm::mat4(
         Projection[0][0], Projection[0][1], Projection[0][2], Projection[0][3],
         Projection[1][0], Projection[1][1], Projection[1][2], Projection[1][3],
@@ -98,8 +81,9 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(sprites[i] != NULL){
-            spm::vec3 myScale = sprites[i]->GetScale();
-            sprites[i]->SetScale(2.0 * (i % 5), 2.0 * (i % 5));
+            spm::vec2 myScale;
+            myScale = sprites[i]->GetScale();
+            sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.1f, myScale.m[1] * 1.1f));
         } else {
             sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
         }

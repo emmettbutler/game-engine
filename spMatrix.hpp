@@ -8,7 +8,7 @@ namespace spm{
             vec4();
             vec4(const float x, const float y, const float z, const float w);
             const float operator*(const vec4 &other) const;
-            void prettyPrint();
+            void pp();
             float m[4];
     };
 
@@ -16,7 +16,7 @@ namespace spm{
         public:
             vec3();
             vec3(const float x, const float y, const float z);
-            void prettyPrint();
+            void pp();
             float m[3];
     };
 
@@ -24,6 +24,7 @@ namespace spm{
         public:
             vec2();
             vec2(const float x, const float y);
+            void pp();
             float m[2];
     };
     class mat4{
@@ -40,7 +41,7 @@ namespace spm{
             const mat4 operator*(const vec2 &other) const;
             bool operator==(const mat4 &other) const;
             bool operator!=(const mat4 &other) const;
-            void prettyPrint();
+            void pp();
             float m[4][4];
     };
 }

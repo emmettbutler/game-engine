@@ -47,31 +47,32 @@ spSprite::spSprite(float x, float y){
     this->x = x;
     this->y = y;
 
+    this->scale = spm::vec2(1.0f, 1.0f);
+
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
     this->rotation = spm::mat4(1.0f);
-    this->scale = spm::scale(spm::vec3(1.0f, 1.0f, 0.0f));
+    this->scale_mat = spm::scale(spm::vec3(this->scale.m[0], this->scale.m[1], 0.0f));
+
 }
 
-void spSprite::SetTransform(float xTrans, float yTrans, float angle){
+void spSprite::SetTransform(spm::vec2 position, float angle){
     // TODO - add rotation
-    this->translation = spm::translation(spm::vec3(xTrans, yTrans, 0.0f));
+    this->translation = spm::translation(spm::vec3(position.m[0], position.m[1], 0.0f));
 }
 
 spm::mat4 spSprite::GetTransform(){
     spm::mat4 transform;
-    transform = this->scale * this->translation;
+    transform = this->scale_mat * this->translation;
     return transform;
 }
 
-void spSprite::SetScale(const float xScale, const float yScale){
-    this->xScale = xScale;
-    this->yScale = yScale;
-    this->scale = spm::scale(spm::vec3(this->xScale, this->yScale, 0.0f));
+void spSprite::SetScale(spm::vec2 newScale){
+    this->scale = newScale;
+    this->scale_mat = spm::scale(spm::vec3(newScale.m[0], newScale.m[1], 0.0f));
 }
 
-spm::vec3 spSprite::GetScale(){
-    // TODO - stop using 3d vectors for this stuff, write own vector classes
-    return spm::vec3(this->xScale, this->yScale, 0.0f);
+spm::vec2 spSprite::GetScale(){
+    return this->scale;
 }
 
 void spSprite::Draw(spm::mat4 viewProjection){
