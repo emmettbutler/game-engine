@@ -49,7 +49,7 @@ spSprite::spSprite(float x, float y){
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
     this->rotation = spm::mat4(1.0f);
-    this->scale = spm::scale(spm::vec3(1000.0f, 1000.0f, 0.0f));
+    this->scale = spm::scale(spm::vec3(1.0f, 1.0f, 0.0f));
 }
 
 void spSprite::SetTransform(float xTrans, float yTrans, float angle){
@@ -59,7 +59,7 @@ void spSprite::SetTransform(float xTrans, float yTrans, float angle){
 
 spm::mat4 spSprite::GetTransform(){
     spm::mat4 transform;
-    transform = this->translation * this->scale;
+    transform = this->scale * this->translation;
     return transform;
 }
 
@@ -78,7 +78,7 @@ void spSprite::Draw(spm::mat4 viewProjection){
     glUseProgram(this->shaderID);
 
     spm::mat4 trans = this->GetTransform();
-    this->MVP = viewProjection * trans;
+    this->MVP = trans * viewProjection;
     glUniformMatrix4fv(this->MVPID, 1, GL_FALSE, &MVP.m[0][0]);
 
     glActiveTexture(GL_TEXTURE0);

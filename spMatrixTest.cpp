@@ -6,17 +6,19 @@
 using namespace spm;
 
 int main(int argc, char *argv[]){
-    spm::mat4 a(1.0), c;
-    spm::vec3 b(2.0f, 3.0f, 4.0f);
-
+    spm::mat4 a, b, c;
+    a = spm::mat4(1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                10.0f, 20.0f, 0.0f, 1.0f);
+    b = spm::mat4(6.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 2.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f);
     a.prettyPrint();
-    printf("*\n");
     b.prettyPrint();
 
     c = a * b;
-
-    printf("=\n");
     c.prettyPrint();
-
-    assert(c.m[2][2] == 4.0f);
+    assert(c.m[0][0] == 6.0f);
 }

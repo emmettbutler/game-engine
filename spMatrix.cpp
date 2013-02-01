@@ -4,129 +4,81 @@ using namespace spm;
 //@implementation mat4
 
 mat4::mat4(){
-    m[0][0] = 1.0f;
-    m[1][0] = 0.0f;
-    m[2][0] = 0.0f;
-    m[3][0] = 0.0f;
-
-    m[0][1] = 0.0f;
-    m[1][1] = 1.0f;
-    m[2][1] = 0.0f;
-    m[3][1] = 0.0f;
-
-    m[0][2] = 0.0f;
-    m[1][2] = 0.0f;
-    m[2][2] = 1.0f;
-    m[3][2] = 0.0f;
-
-    m[0][3] = 0.0f;
-    m[1][3] = 0.0f;
-    m[2][3] = 0.0f;
-    m[3][3] = 1.0f;
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            m[i][j] = 0.0f;
+        }
+    }
 }
 
 mat4::mat4(const float scaler){
-    m[0][0] = scaler;
-    m[1][0] = 0.0f;
-    m[2][0] = 0.0f;
-    m[3][0] = 0.0f;
-
-    m[0][1] = 0.0f;
-    m[1][1] = scaler;
-    m[2][1] = 0.0f;
-    m[3][1] = 0.0f;
-
-    m[0][2] = 0.0f;
-    m[1][2] = 0.0f;
-    m[2][2] = scaler;
-    m[3][2] = 0.0f;
-
-    m[0][3] = 0.0f;
-    m[1][3] = 0.0f;
-    m[2][3] = 0.0f;
-    m[3][3] = scaler;
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            m[i][j] = 0.0f;
+            if(i == j){
+                m[i][j] = scaler;
+            }
+        }
+    }
 }
 
 mat4::mat4(const float x1, const float y1, const float z1, const float w1,
     const float x2, const float y2, const float z2, const float w2,
     const float x3, const float y3, const float z3, const float w3,
-    const float x4, const float y4, const float z4, const float w4){
+    const float transx, const float transy, const float transz, const float w4){
     m[0][0] = x1;
-    m[1][0] = y1;
-    m[2][0] = z1;
-    m[3][0] = w1;
+    m[0][1] = y1;
+    m[0][2] = z1;
+    m[0][3] = w1;
 
-    m[0][1] = x2;
+    m[1][0] = x2;
     m[1][1] = y2;
-    m[2][1] = z2;
-    m[3][1] = w2;
+    m[1][2] = z2;
+    m[1][3] = w2;
 
-    m[0][2] = x3;
-    m[1][2] = y3;
+    m[2][0] = x3;
+    m[2][1] = y3;
     m[2][2] = z3;
-    m[3][2] = w3;
+    m[2][3] = w3;
 
-    m[0][3] = x4;
-    m[1][3] = y4;
-    m[2][3] = z4;
+    m[3][0] = transx;
+    m[3][1] = transy;
+    m[3][2] = transz;
     m[3][3] = w4;
 }
 
 // operator overloads
 mat4& mat4::operator=(const mat4 &rhs){
     if (this != &rhs){
-        this->m[0][0] = rhs.m[0][0];
-        this->m[0][1] = rhs.m[0][1];
-        this->m[0][2] = rhs.m[0][2];
-        this->m[0][3] = rhs.m[0][3];
-
-        this->m[1][0] = rhs.m[1][0];
-        this->m[1][1] = rhs.m[1][1];
-        this->m[1][2] = rhs.m[1][2];
-        this->m[1][3] = rhs.m[1][3];
-
-        this->m[2][0] = rhs.m[2][0];
-        this->m[2][1] = rhs.m[2][1];
-        this->m[2][2] = rhs.m[2][2];
-        this->m[2][3] = rhs.m[2][3];
-
-        this->m[3][0] = rhs.m[3][0];
-        this->m[3][1] = rhs.m[3][1];
-        this->m[3][2] = rhs.m[3][2];
-        this->m[3][3] = rhs.m[3][3];
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                this->m[i][j] = rhs.m[i][j];
+            }
+        }
     }
     return *this;
 }
 
 const mat4 mat4::operator*(const mat4 &other) const{
-    // cross product between 2 4x4 matrices
-    mat4 result = *this;
+    // product of 2 4x4 matrices
+    mat4 result;
+    result = mat4();
 
-    result.m[0][0] = spm::vec4(this->m[0][0], this->m[0][1], this->m[0][2], this->m[0][3]) * spm::vec4(this->m[0][0], this->m[1][0], this->m[2][0], this->m[3][0]);
-    result.m[0][1] = spm::vec4(this->m[0][0], this->m[0][1], this->m[0][2], this->m[0][3]) * spm::vec4(this->m[0][1], this->m[1][1], this->m[2][1], this->m[3][1]);
-    result.m[0][2] = spm::vec4(this->m[0][0], this->m[0][1], this->m[0][2], this->m[0][3]) * spm::vec4(this->m[0][2], this->m[1][2], this->m[2][2], this->m[3][2]);
-    result.m[0][3] = spm::vec4(this->m[0][0], this->m[0][1], this->m[0][2], this->m[0][3]) * spm::vec4(this->m[0][3], this->m[1][3], this->m[2][3], this->m[3][3]);
-
-    result.m[1][0] = spm::vec4(this->m[1][0], this->m[1][1], this->m[1][2], this->m[1][3]) * spm::vec4(this->m[0][0], this->m[1][0], this->m[2][0], this->m[3][0]);
-    result.m[1][1] = spm::vec4(this->m[1][0], this->m[1][1], this->m[1][2], this->m[1][3]) * spm::vec4(this->m[0][1], this->m[1][1], this->m[2][1], this->m[3][1]);
-    result.m[1][2] = spm::vec4(this->m[1][0], this->m[1][1], this->m[1][2], this->m[1][3]) * spm::vec4(this->m[0][2], this->m[1][2], this->m[2][2], this->m[3][2]);
-    result.m[1][3] = spm::vec4(this->m[1][0], this->m[1][1], this->m[1][2], this->m[1][3]) * spm::vec4(this->m[0][3], this->m[1][3], this->m[2][3], this->m[3][3]);
-
-    result.m[2][0] = spm::vec4(this->m[2][0], this->m[2][1], this->m[2][2], this->m[2][3]) * spm::vec4(this->m[0][0], this->m[1][0], this->m[2][0], this->m[3][0]);
-    result.m[2][1] = spm::vec4(this->m[2][0], this->m[2][1], this->m[2][2], this->m[2][3]) * spm::vec4(this->m[0][1], this->m[1][1], this->m[2][1], this->m[3][1]);
-    result.m[2][2] = spm::vec4(this->m[2][0], this->m[2][1], this->m[2][2], this->m[2][3]) * spm::vec4(this->m[0][2], this->m[1][2], this->m[2][2], this->m[3][2]);
-    result.m[2][3] = spm::vec4(this->m[2][0], this->m[2][1], this->m[2][2], this->m[2][3]) * spm::vec4(this->m[0][3], this->m[1][3], this->m[2][3], this->m[3][3]);
-
-    result.m[3][0] = spm::vec4(this->m[3][0], this->m[3][1], this->m[3][2], this->m[3][3]) * spm::vec4(this->m[0][0], this->m[1][0], this->m[2][0], this->m[3][0]);
-    result.m[3][1] = spm::vec4(this->m[3][0], this->m[3][1], this->m[3][2], this->m[3][3]) * spm::vec4(this->m[0][1], this->m[1][1], this->m[2][1], this->m[3][1]);
-    result.m[3][2] = spm::vec4(this->m[3][0], this->m[3][1], this->m[3][2], this->m[3][3]) * spm::vec4(this->m[0][2], this->m[1][2], this->m[2][2], this->m[3][2]);
-    result.m[3][3] = spm::vec4(this->m[3][0], this->m[3][1], this->m[3][2], this->m[3][3]) * spm::vec4(this->m[0][3], this->m[1][3], this->m[2][3], this->m[3][3]);
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            for(int k = 0; k < 4; k++){
+                result.m[i][j] += this->m[i][k] * other.m[k][j];
+            }
+        }
+    }
 
     return result;
 }
 
 const mat4 mat4::operator*(const vec3 &other) const{
     // cross product between a 3d vector and a 4x4 matrix
+    // TODO - this is broken and wrong
+    assert(false);
     mat4 result = *this;
     result.m[0][0] *= other.m[0];
     result.m[1][0] *= other.m[1];
@@ -177,9 +129,8 @@ const mat4 mat4::operator*(const vec2 &other) const{
 }
 
 bool mat4::operator==(const mat4 &other) const{
-    if(m[0][0] == other.m[0][0]){
-        return true;
-    }
+    printf("spm::mat4 COMPARISON OPERATOR UNIMPLEMENTED!\n");
+    assert(false);
     return false;
 }
 
