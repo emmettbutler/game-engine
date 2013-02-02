@@ -4,7 +4,6 @@
 #include <shader.hpp>
 #include <texture.hpp>
 
-#include "spMatrixStack.hpp"
 #include "spMatrixTransform.hpp"
 using namespace spm;
 

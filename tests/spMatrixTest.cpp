@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "spMatrix.hpp"
+
 using namespace spm;
 
 int main(int argc, char *argv[]){
@@ -15,10 +16,10 @@ int main(int argc, char *argv[]){
                 0.0f, 2.0f, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
-    a.prettyPrint();
-    b.prettyPrint();
+    a.pp();
+    b.pp();
 
-    c = a * b;
-    c.prettyPrint();
+    c = b * a;
+    c.pp();
     assert(c.m[0][0] == 6.0f);
 }

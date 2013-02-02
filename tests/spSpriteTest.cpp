@@ -8,6 +8,10 @@
 #include <shader.hpp>
 #include <texture.hpp>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+using namespace glm;
+
 #include "spSprite.hpp"
 
 int setupWindow(const float windowWidth, const float windowHeight){
