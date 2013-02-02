@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include <GL/glew.h>
 #include <GL/glfw.h>
 
@@ -13,32 +9,8 @@
 using namespace glm;
 
 #include "spSprite.hpp"
+#include "spGame.hpp"
 
-int setupWindow(const float windowWidth, const float windowHeight){
-    if( !glfwInit() ){
-        fprintf( stderr, "Failed to initialize GLFW\n" );
-        return -1;
-    }
-
-    if( !glfwOpenWindow(windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) ){
-        fprintf( stderr, "Failed to open GLFW window\n" );
-        glfwTerminate();
-        return -1;
-    }
-
-    glewExperimental=true;
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
-        return -1;
-    }
-
-    glfwSetWindowTitle( "Sprite Test" );
-    glfwEnable( GLFW_STICKY_KEYS );
-
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
 
 spm::mat4 calculateViewProjection(const float viewWidth, const float viewHeight){
     glm::mat4 Projection = glm::ortho(0.0f, viewWidth, 0.0f, viewHeight, -5.0f, 5.0f);
@@ -67,7 +39,7 @@ int main(){
     const float windowWidth = 1024.0f;
     const float windowHeight = 768.0f;
 
-    if(setupWindow(windowWidth, windowHeight) == -1){
+    if((new spGame(windowWidth, windowHeight)) == NULL){
         return -1;
     };
 

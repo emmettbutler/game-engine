@@ -13,7 +13,7 @@ GLFWINC = external/glfw-2.7.6/include
 GLMINC = external/glm-0.9.4.0
 LIBINC = -Iinclude
 INCDIRS = -I$(SHAREDPATH) -I$(GLEWINC) -I$(GLFWINC) -I$(GLMINC) $(LIBINC)
-SPLIB = spSprite.o spMatrixTransform.o spMatrix.o
+SPLIB = spSprite.o spMatrixTransform.o spMatrix.o spGame.o
 EXTERNALS = shader.o texture.o
 TESTS = tMatrix tSprite
 
@@ -46,6 +46,8 @@ spList.o : $(LIBRARYPATH)/spList.cpp
 	$(CXX) -g $(INCDIRS) -c $(LIBRARYPATH)/spList.cpp
 spMatrix.o : $(LIBRARYPATH)/spMatrix.cpp
 	$(CXX) -g $(INCDIRS) -c $(LIBRARYPATH)/spMatrix.cpp
+spGame.o : $(LIBRARYPATH)/spGame.cpp
+	$(CXX) -g $(INCDIRS) -c $(LIBRARYPATH)/spGame.cpp
 
 clean:
 	rm -rf *.dSYM *.o .*.un~ .*.swp $(TESTS) $(MAIN)
