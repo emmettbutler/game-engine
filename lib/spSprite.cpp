@@ -34,7 +34,7 @@ void spSprite::init(){
     this->vertexPosition_modelspaceID = glGetAttribLocation(this->shaderID, "vertexPosition_modelspace");
     this->vertexUVID = glGetAttribLocation(this->shaderID, "vertexUV");
 
-    this->Texture = loadTGA_glfw("textures/heart_sprite.tga");
+    this->Texture = loadTGA_glfw("textures/astro1.tga");
     this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
 
     this->shrink_filter = GL_NEAREST;
@@ -53,7 +53,7 @@ spSprite::spSprite(float x, float y){
     this->scale = spm::vec2(1.0f, 1.0f);
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
-    this->rotation = spm::mat4(1.0f);
+    this->rotation = spm::rotation(20.0f);
     this->scale_mat = spm::scale(spm::vec3(this->scale.m[0], this->scale.m[1], 0.0f));
 
 }
@@ -61,11 +61,12 @@ spSprite::spSprite(float x, float y){
 void spSprite::SetTransform(spm::vec2 position, float angle){
     // TODO - add rotation
     this->translation = spm::translation(spm::vec3(position.m[0], position.m[1], 0.0f));
+    this->rotation = spm::rotation(angle);
 }
 
 spm::mat4 spSprite::GetTransform(){
     spm::mat4 transform;
-    transform = this->scale_mat * this->translation;
+    transform = this->scale_mat * this->rotation * this->translation;
     return transform;
 }
 

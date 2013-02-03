@@ -33,7 +33,7 @@ externals : $(EXTERNALS)
 shader.o : common/shader.cpp
 	$(CXX) -g $(INCDIRS) -c $(SHAREDPATH)/shader.cpp
 texture.o : common/texture.cpp
-	$(CXX) -g $(INCDIRS) -c $(SHAREDPATH)/texture.cpp
+	$(CXX) -g $(INCDIRS) -c $(SHAREDPATH)/texture.cpp -lpng
 
 splib : $(SPLIB)
 spSprite.o : $(LIBRARYPATH)/spSprite.cpp
