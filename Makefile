@@ -1,6 +1,6 @@
 CXX = g++
 CFLAGS = -g -O2
-LIBS = -lglfw -lGLEW -lGL -lGLU
+LIBS = -lpng -lglfw -lGLEW -lGL -lGLU
 
 LIBRARYPATH = lib
 INCLUDEPATH = include

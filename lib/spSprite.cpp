@@ -34,7 +34,7 @@ void spSprite::init(){
     this->vertexPosition_modelspaceID = glGetAttribLocation(this->shaderID, "vertexPosition_modelspace");
     this->vertexUVID = glGetAttribLocation(this->shaderID, "vertexUV");
 
-    this->Texture = loadTGA_glfw("textures/astro1.tga");
+    this->Texture = loadPngImage("textures/sprites_characters.png");
     this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
 
     this->shrink_filter = GL_NEAREST;
