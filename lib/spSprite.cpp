@@ -3,6 +3,8 @@
 void spSprite::init(){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
 
+    // calculate these or something based on the width and height of the loaded image
+
     const GLfloat g_vertex_buffer_data[] = {
         -1.0f,-1.0f,0.0f,
          1.0f,-1.0f,0.0f,
