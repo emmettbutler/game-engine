@@ -7,13 +7,13 @@ int main(){
         return -1;
     }
 
-    int numSprites = 20;
-    spSprite *sprites[20] = {0};
+    int numSprites = 40;
+    spSprite *sprites[40] = {0};
 
     spm::vec2 viewDim = frame->GetViewDimensions();
     for(int i = 0; i < numSprites; i++){
         int choice = rand() % 4;
-        char *tex;
+        const char *tex;
         switch(choice){
             case 0: tex = "textures/Cop_Head_Dog_1.png"; break;
             case 1: tex = "textures/BusinessHead_Dog_1.png"; break;
@@ -24,20 +24,22 @@ int main(){
 
     }
     spm::vec2 anchorPoint = spm::vec2(viewDim.m[0]/2, viewDim.m[1]/2);
-    int ttime = 0;
+    int ttime = 0, htime = 0;
 
     srand(time(NULL));
 
     do{
-        ttime++;
+        htime++;
+        if(htime % 10 == 0){
+            ttime++;
+        }
         glClear(GL_COLOR_BUFFER_BIT);
 
         for(int i = 0; i < numSprites; i++){
             float scaler = 1.5f * (sin(.09 * ttime) + 2.0f);
-            sprites[i]->SetScale(spm::vec2(scaler, scaler));
             sprites[i]->SetAngle(sprites[i]->GetAngle() + .04);
             sprites[i]->SetPosition(spm::vec2(
-                        anchorPoint.m[0] + 20 * i * sin(i * .01f * ttime),
+                        anchorPoint.m[0] + 20 * i * sin(i * .01f * htime),
                         anchorPoint.m[1] + 20 * i * cos(i * .01f * ttime))
                     );
             sprites[i]->Draw(frame);
