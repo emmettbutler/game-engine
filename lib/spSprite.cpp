@@ -3,15 +3,16 @@
 void spSprite::init(){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
 
-    // calculate these or something based on the width and height of the loaded image
+    int width, height;
+    this->Texture = loadPngImage("textures/BusinessHead_Dog_1.png", width, height);
 
     const GLfloat g_vertex_buffer_data[] = {
-        -1.0f,-1.0f,0.0f,
-         1.0f,-1.0f,0.0f,
-        -1.0f, 1.0f,0.0f,
-         1.0f,-1.0f,0.0f,
-        -1.0f, 1.0f,0.0f,
-         1.0f, 1.0f,0.0f,
+        -width,-height,0.0f,
+         width,-height,0.0f,
+        -width, height,0.0f,
+         width,-height,0.0f,
+        -width, height,0.0f,
+         width, height,0.0f,
     };
 
     // render a texture on a square
@@ -36,7 +37,6 @@ void spSprite::init(){
     this->vertexPosition_modelspaceID = glGetAttribLocation(this->shaderID, "vertexPosition_modelspace");
     this->vertexUVID = glGetAttribLocation(this->shaderID, "vertexUV");
 
-    this->Texture = loadPngImage("textures/sprites_characters.png");
     this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
 
     this->shrink_filter = GL_NEAREST;
@@ -55,7 +55,7 @@ spSprite::spSprite(float x, float y){
     this->scale = spm::vec2(1.0f, 1.0f);
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
-    this->rotation = spm::rotation(20.0f);
+    this->rotation = spm::rotation(0.0f);
     this->scale_mat = spm::scale(spm::vec3(this->scale.m[0], this->scale.m[1], 0.0f));
 
 }

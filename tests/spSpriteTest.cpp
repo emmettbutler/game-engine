@@ -43,14 +43,14 @@ int main(){
         return -1;
     };
 
-    const float viewWidth = windowWidth/5.0f;
-    const float viewHeight = windowHeight/5.0f;
+    const float viewWidth = windowWidth/.75f;
+    const float viewHeight = windowHeight/.75f;
 
     spm::mat4 viewProjection = calculateViewProjection(viewWidth, viewHeight);
 
     srand(time(NULL));
-    int numSprites = 10;
-    spSprite *sprites[10] = {0};
+    int numSprites = 100;
+    spSprite *sprites[100] = {0};
     int i = 0;
 
     do{
@@ -59,8 +59,8 @@ int main(){
         if(sprites[i] != NULL){
             spm::vec2 myScale;
             myScale = sprites[i]->GetScale();
-            //sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.8f, myScale.m[1] * 1.8f));
-            sprites[i]->SetScale(spm::vec2(160.8f, 160.8f));
+            sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.8f, myScale.m[1] * 1.8f));
+            //sprites[i]->SetScale(spm::vec2(160.8f, 160.8f));
         } else {
             sprites[i] = new spSprite(rand() % (int)viewWidth, rand() % (int)viewHeight);
         }
