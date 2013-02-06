@@ -2,56 +2,45 @@
 #include "spGame.hpp"
 
 int main(){
+    const float windowWidth = 1280.0f;
+    const float windowHeight = 768.0f;
+
     spGame *frame;
-    if((frame = new spGame(1280.0f, 768.0f)) == NULL){
+    if((frame = new spGame(windowWidth, windowHeight)) == NULL){
         return -1;
     }
 
-    int numSprites = 40;
-    spSprite *sprites[40] = {0};
-
     spm::vec2 viewDim = frame->GetViewDimensions();
-    for(int i = 0; i < numSprites; i++){
-        int choice = rand() % 4;
-        const char *tex;
-        switch(choice){
-            case 0: tex = "textures/Cop_Head_Dog_1.png"; break;
-            case 1: tex = "textures/BusinessHead_Dog_1.png"; break;
-            case 2: tex = "textures/Nudie_Head_Dog_1.png"; break;
-            case 3: tex = "textures/Jogger_Head_Dog_1.png"; break;
-        }
-        sprites[i] = new spSprite(rand() % (int)viewDim.m[0], rand() % (int)viewDim.m[1]/2, tex);
-
-    }
+    spSprite *sprite = new spSprite(viewDim.m[0]/2, viewDim.m[1]/2, "textures/BusinessHead_Dog_1.png");
     spm::vec2 anchorPoint = spm::vec2(viewDim.m[0]/2, viewDim.m[1]/2);
-    int ttime = 0, htime = 0;
-
-    srand(time(NULL));
+    int time = 0;
 
     do{
-        htime++;
-        if(htime % 10 == 0){
-            ttime++;
-        }
+        time++;
         glClear(GL_COLOR_BUFFER_BIT);
 
-        for(int i = 0; i < numSprites; i++){
-            float scaler = 1.5f * (sin(.09 * ttime) + 2.0f);
-            sprites[i]->SetAngle(sprites[i]->GetAngle() + .04);
-            sprites[i]->SetPosition(spm::vec2(
-                        anchorPoint.m[0] + 20 * i * sin(i * .01f * htime),
-                        anchorPoint.m[1] + 20 * i * cos(i * .01f * ttime))
-                    );
-            sprites[i]->Draw(frame);
-        }
+        spm::vec2 myScale, myPosition;
+        myScale = sprite->GetScale();
+        float scaler = 1.5f * (sin(.09 * time) + 2.0f);
+        sprite->SetScale(spm::vec2(scaler, scaler));
+        sprite->SetAngle(sprite->GetAngle() + .04);
+
+        myPosition = sprite->GetPosition();
+        sprite->SetPosition(spm::vec2(
+                    anchorPoint.m[0] + 400.0f * sin(.01f * time),
+                    anchorPoint.m[1] + 400.0f * cos(.01f * time))
+                );
+
+        // TODO - instead of having to explicitly call draw for each actor,
+        // maybe encapsulate the entire game loop in spGame and keep references to
+        // all added actors (a la flixel)
+        sprite->Draw(frame);
 
         glfwSwapBuffers();
     } while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );
 
-    for(int i = 0; i < numSprites; i++){
-        sprites[i]->Dealloc();
-        delete sprites[i];
-        sprites[i] = NULL;
-    }
+    sprite->Dealloc();
+    delete sprite;
+    sprite = NULL;
 }

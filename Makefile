@@ -15,7 +15,7 @@ LIBINC = -Iinclude
 INCDIRS = -I$(SHAREDPATH) -I$(GLEWINC) -I$(GLFWINC) -I$(GLMINC) $(LIBINC)
 SPLIB = spSprite.o spMatrixTransform.o spMatrix.o spGame.o
 EXTERNALS = shader.o texture.o
-TESTS = tMatrix tSprite tTransform
+TESTS = tMatrix tSprite tTransform tTransformLoad tTransformMultiTimer
 
 all: $(MAIN).o splib externals tests
 	$(CXX) $(CFLAGS) $(INCDIRS) -o $(MAIN) $(MAIN).o $(SPLIB) $(EXTERNALS) $(LIBS)
@@ -25,8 +25,12 @@ tMatrix : tests/spMatrixTest.cpp
 	$(CXX) $(CFLAGS) $(LIBINC) $(TESTPATH)/spMatrixTest.cpp $(LIBRARYPATH)/spMatrix.cpp -o tMatrix
 tSprite : splib externals
 	$(CXX) $(CFLAGS) $(INCDIRS) -o tSprite $(TESTPATH)/spSpriteTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
+tTransformLoad : splib externals
+	$(CXX) $(CFLAGS) $(INCDIRS) -o tTransformLoad $(TESTPATH)/spTransformLoadTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
 tTransform : splib externals
 	$(CXX) $(CFLAGS) $(INCDIRS) -o tTransform $(TESTPATH)/spTransformTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
+tTransformMultiTimer : splib externals
+	$(CXX) $(CFLAGS) $(INCDIRS) -o tTransformMultiTimer $(TESTPATH)/spTransformMultiTimerTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
 
 $(MAIN).o : main.cpp
 	$(CXX) $(CFLAGS) $(INCDIRS) -c main.cpp -o $(MAIN).o
