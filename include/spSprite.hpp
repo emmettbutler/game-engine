@@ -10,7 +10,7 @@ using namespace spm;
 class spSprite{
     public:
         spSprite();
-        spSprite(float x, float y);
+        spSprite(float x, float y, const char *texture);
         spSprite(float x, float y, float width, float height);
         // TODO - passing in a void* here is pretty hacky. this should internally
         // use a singleton instance of the game context so we don't have to
@@ -26,7 +26,7 @@ class spSprite{
         spm::vec2 GetPosition();
         void Dealloc();
     private:
-        void init();
+        void init(const char *texture);
         spm::mat4 translation, rotation, scale_mat;
 
         float x, y, height, width, angle;

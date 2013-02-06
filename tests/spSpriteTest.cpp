@@ -26,7 +26,7 @@ int main(){
             sprites[i]->SetScale(spm::vec2(myScale.m[0] * 1.8f, myScale.m[1] * 1.8f));
         } else {
             spm::vec2 viewDim = frame->GetViewDimensions();
-            sprites[i] = new spSprite(rand() % (int)viewDim.m[0], rand() % (int)viewDim.m[1]);
+            sprites[i] = new spSprite(rand() % (int)viewDim.m[0], rand() % (int)viewDim.m[1], "textures/BusinessHead_Dog_1.png");
         }
         if(i < numSprites){
             i++;

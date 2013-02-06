@@ -1,11 +1,11 @@
 #include "spSprite.hpp"
 #include "spGame.hpp"
 
-void spSprite::init(){
+void spSprite::init(const char *texture){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
 
     int width, height;
-    this->Texture = loadPngImage("textures/BusinessHead_Dog_1.png", width, height);
+    this->Texture = loadPngImage(texture, width, height);
 
     const GLfloat g_vertex_buffer_data[] = {
         -width,-height,0.0f,
@@ -45,11 +45,11 @@ void spSprite::init(){
 }
 
 spSprite::spSprite(){
-    this->init();
+    this->init("textures/unitsprite.png");
 }
 
-spSprite::spSprite(float x, float y){
-    this->init();
+spSprite::spSprite(float x, float y, const char *texture){
+    this->init(texture);
     this->x = x;
     this->y = y;
 
