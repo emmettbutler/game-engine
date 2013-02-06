@@ -1,7 +1,10 @@
+#include <sys/time.h>
+
 #include "spSprite.hpp"
 #include "spGame.hpp"
 
 int main(){
+    timespec ts, te;
     spGame *frame;
     if((frame = new spGame(1280.0f, 768.0f)) == NULL){
         return -1;
@@ -28,6 +31,8 @@ int main(){
     srand(time(NULL));
 
     do{
+        clock_gettime(CLOCK_REALTIME, &ts);
+
         ttime++;
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -42,6 +47,15 @@ int main(){
         }
 
         glfwSwapBuffers();
+
+        // fps timing
+        clock_gettime(CLOCK_REALTIME, &te);
+        int nsec_elapsed = te.tv_nsec - ts.tv_nsec;
+        float sec_elapsed = nsec_elapsed / 1000000000.0f;
+        if(ttime % 10 == 0 && sec_elapsed > 0){
+                printf("FPS: %0.2f\n", sec_elapsed * 1000.0f);
+                printf("\033[2J\033[1;1H");
+        }
     } while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );
 
