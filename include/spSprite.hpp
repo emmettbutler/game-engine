@@ -12,17 +12,24 @@ class spSprite{
         spSprite();
         spSprite(float x, float y);
         spSprite(float x, float y, float width, float height);
-        void Draw(spm::mat4 viewProjection);
+        // TODO - passing in a void* here is pretty hacky. this should internally
+        // use a singleton instance of the game context so we don't have to
+        // pass it anything
+        void Draw(void *frame);
         void SetTransform(spm::vec2 position, float angle);
         spm::mat4 GetTransform();
         void SetScale(spm::vec2 newScale);
         spm::vec2 GetScale();
+        void SetAngle(const float angle);
+        float GetAngle();
+        void SetPosition(spm::vec2 pos);
+        spm::vec2 GetPosition();
         void Dealloc();
     private:
         void init();
         spm::mat4 translation, rotation, scale_mat;
 
-        float x, y, height, width;
+        float x, y, height, width, angle;
         spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, Texture, TextureID, MVPID;

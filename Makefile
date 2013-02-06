@@ -15,7 +15,7 @@ LIBINC = -Iinclude
 INCDIRS = -I$(SHAREDPATH) -I$(GLEWINC) -I$(GLFWINC) -I$(GLMINC) $(LIBINC)
 SPLIB = spSprite.o spMatrixTransform.o spMatrix.o spGame.o
 EXTERNALS = shader.o texture.o
-TESTS = tMatrix tSprite
+TESTS = tMatrix tSprite tTransform
 
 all: $(MAIN).o splib externals tests
 	$(CXX) -g $(INCDIRS) -o $(MAIN) $(MAIN).o $(SPLIB) $(EXTERNALS) $(LIBS)
@@ -25,6 +25,8 @@ tMatrix : tests/spMatrixTest.cpp
 	$(CXX) -g $(LIBINC) $(TESTPATH)/spMatrixTest.cpp $(LIBRARYPATH)/spMatrix.cpp -o tMatrix
 tSprite : splib externals
 	$(CXX) -g $(INCDIRS) -o tSprite $(TESTPATH)/spSpriteTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
+tTransform : splib externals
+	$(CXX) -g $(INCDIRS) -o tTransform $(TESTPATH)/spTransformTest.cpp $(SPLIB) $(EXTERNALS) $(LIBS)
 
 $(MAIN).o : main.cpp
 	$(CXX) -g $(INCDIRS) -c main.cpp -o $(MAIN).o

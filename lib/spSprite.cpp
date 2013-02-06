@@ -1,4 +1,5 @@
 #include "spSprite.hpp"
+#include "spGame.hpp"
 
 void spSprite::init(){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
@@ -60,6 +61,25 @@ spSprite::spSprite(float x, float y){
 
 }
 
+void spSprite::SetAngle(const float angle){
+    this->rotation = spm::rotation(angle);
+    this->angle = angle;
+}
+
+float spSprite::GetAngle(){
+    return this->angle;
+}
+
+spm::vec2 spSprite::GetPosition(){
+    return spm::vec2(this->x, this->y);
+}
+
+void spSprite::SetPosition(spm::vec2 pos){
+    this->x = pos.m[0];
+    this->y = pos.m[1];
+    this->translation = spm::translation(spm::vec3(this->x, this->y, 0.0f));
+}
+
 void spSprite::SetTransform(spm::vec2 position, float angle){
     // TODO - add rotation
     this->translation = spm::translation(spm::vec3(position.m[0], position.m[1], 0.0f));
@@ -81,9 +101,11 @@ spm::vec2 spSprite::GetScale(){
     return this->scale;
 }
 
-void spSprite::Draw(spm::mat4 viewProjection){
+void spSprite::Draw(void *frame){
     glUseProgram(this->shaderID);
 
+    spGame *myFrame = (spGame *)frame;
+    spm::mat4 viewProjection = myFrame->calculateViewProjection();
     spm::mat4 trans = this->GetTransform();
     this->MVP = trans * viewProjection;
     glUniformMatrix4fv(this->MVPID, 1, GL_FALSE, &MVP.m[0][0]);
