@@ -8,6 +8,11 @@
 using namespace spm;
 
 class spSprite{
+    typedef struct _animData {
+        GLuint frame;
+        int width, height;
+    } animData;
+
     public:
         spSprite();
         spSprite(float x, float y, const char *texture);
@@ -37,7 +42,7 @@ class spSprite{
         spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, currentTexture, TextureID, MVPID;
-        GLuint *anims;
+        animData *anims;
         GLuint shrink_filter, exp_filter;
         int frameCounter, frameNum;
         spm::mat4 MVP;

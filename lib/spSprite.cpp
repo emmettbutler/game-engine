@@ -23,9 +23,8 @@ void spSprite::setShaderParams(){
 }
 
 void spSprite::AddAnimationFrames(char **frames){
-    int width, height;
     for(int i = 0; i < 3; i++){
-        this->anims[i] = loadPngImage(frames[i], width, height);
+        this->anims[i].frame = loadPngImage(frames[i], this->anims[i].width, this->anims[i].height);
     }
     this->animTimer = 0;
     this->frameNum = 2;
@@ -46,7 +45,8 @@ void spSprite::PlayAnimation(float elapsed){
     } else {
         this->frameCounter = 0;
     }
-    this->currentTexture = this->anims[this->frameCounter];
+    this->setupQuad(this->anims[this->frameCounter].width, this->anims[this->frameCounter].height);
+    this->currentTexture = this->anims[this->frameCounter].frame;
 }
 
 void spSprite::setupQuad(int width, int height){
@@ -89,7 +89,7 @@ spSprite::spSprite(float x, float y, const char *texture){
 
     this->scale = spm::vec2(1.0f, 1.0f);
 
-    this->anims = new GLuint[3];
+    this->anims = new animData[3];
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
     this->rotation = spm::rotation(0.0f);
