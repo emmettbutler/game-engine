@@ -24,15 +24,21 @@ class spSprite{
         float GetAngle();
         void SetPosition(spm::vec2 pos);
         spm::vec2 GetPosition();
+        void AddAnimationFrames(char **frames);
+        void PlayAnimation(float elapsed);
         void Dealloc();
     private:
         void init(const char *texture);
+        void setupQuad(int width, int height);
+        void setShaderParams();
         spm::mat4 translation, rotation, scale_mat;
 
-        float x, y, height, width, angle;
+        float x, y, height, width, angle, animRate, animTimer;
         spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
-        GLuint vertexUVID, Texture, TextureID, MVPID;
+        GLuint vertexUVID, currentTexture, TextureID, MVPID;
+        GLuint *anims;
         GLuint shrink_filter, exp_filter;
+        int frameCounter, frameNum;
         spm::mat4 MVP;
 };

@@ -16,7 +16,7 @@ int main(){
     spm::vec2 viewDim = frame->GetViewDimensions();
     for(int i = 0; i < numSprites; i++){
         int choice = rand() % 4;
-         const char *tex;
+        const char *tex;
         switch(choice){
             case 0: tex = "textures/Cop_Head_Dog_1.png"; break;
             case 1: tex = "textures/BusinessHead_Dog_1.png"; break;

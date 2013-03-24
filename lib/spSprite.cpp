@@ -5,8 +5,51 @@ void spSprite::init(const char *texture){
     this->shaderID = LoadShaders( "shaders/spVanillaSprite.vs", "shaders/spVanillaSprite.fs" );
 
     int width, height;
-    this->Texture = loadPngImage(texture, width, height);
+    this->currentTexture = loadPngImage(texture, width, height);
 
+    this->setupQuad(width, height);
+    this->setShaderParams();
+}
+
+void spSprite::setShaderParams(){
+    this->MVPID = glGetUniformLocation(this->shaderID, "MVP");
+    this->vertexPosition_modelspaceID = glGetAttribLocation(this->shaderID, "vertexPosition_modelspace");
+    this->vertexUVID = glGetAttribLocation(this->shaderID, "vertexUV");
+
+    this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
+
+    this->shrink_filter = GL_NEAREST;
+    this->exp_filter = GL_NEAREST;
+}
+
+void spSprite::AddAnimationFrames(char **frames){
+    int width, height;
+    for(int i = 0; i < 3; i++){
+        this->anims[i] = loadPngImage(frames[i], width, height);
+    }
+    this->animTimer = 0;
+    this->frameNum = 2;
+    this->frameCounter = 0;
+    this->animRate = .8;
+}
+
+void spSprite::PlayAnimation(float elapsed){
+    if(elapsed < 0.0f) return;
+    this->animTimer += elapsed;
+    if(this->animTimer < this->animRate){
+        return;
+    }
+    this->animTimer = 0;
+
+    if(this->frameCounter < this->frameNum){
+        this->frameCounter++;
+    } else {
+        this->frameCounter = 0;
+    }
+    this->currentTexture = this->anims[this->frameCounter];
+}
+
+void spSprite::setupQuad(int width, int height){
     const GLfloat g_vertex_buffer_data[] = {
         -width,-height,0.0f,
          width,-height,0.0f,
@@ -33,15 +76,6 @@ void spSprite::init(const char *texture){
     glGenBuffers(1, &this->uvbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, this->uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
-
-    this->MVPID = glGetUniformLocation(this->shaderID, "MVP");
-    this->vertexPosition_modelspaceID = glGetAttribLocation(this->shaderID, "vertexPosition_modelspace");
-    this->vertexUVID = glGetAttribLocation(this->shaderID, "vertexUV");
-
-    this->TextureID  = glGetUniformLocation(this->shaderID, "myTextureSampler");
-
-    this->shrink_filter = GL_NEAREST;
-    this->exp_filter = GL_NEAREST;
 }
 
 spSprite::spSprite(){
@@ -54,6 +88,8 @@ spSprite::spSprite(float x, float y, const char *texture){
     this->y = y;
 
     this->scale = spm::vec2(1.0f, 1.0f);
+
+    this->anims = new GLuint[3];
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
     this->rotation = spm::rotation(0.0f);
@@ -111,7 +147,7 @@ void spSprite::Draw(void *frame){
     glUniformMatrix4fv(this->MVPID, 1, GL_FALSE, &MVP.m[0][0]);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, Texture);
+    glBindTexture(GL_TEXTURE_2D, this->currentTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->shrink_filter);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->exp_filter);

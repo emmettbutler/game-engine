@@ -9,5 +9,6 @@ class spGame{
         spm::mat4 calculateViewProjection();
         spm::vec2 GetViewDimensions();
     private:
-        float viewWidth, viewHeight;
+        float calcFPS();
+        float viewWidth, viewHeight, fps;
 };

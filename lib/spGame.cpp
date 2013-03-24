@@ -32,6 +32,7 @@ spGame::spGame(const float windowWidth, const float windowHeight){
 
     this->viewWidth = windowWidth/.75f;
     this->viewHeight = windowHeight/.75f;
+    this->fps = 0;
 }
 
 spm::mat4 spGame::calculateViewProjection(){
