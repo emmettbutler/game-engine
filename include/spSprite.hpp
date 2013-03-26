@@ -8,11 +8,6 @@
 using namespace spm;
 
 class spSprite{
-    typedef struct _animData {
-        GLuint frame;
-        int width, height;
-    } animData;
-
     public:
         spSprite();
         spSprite(float x, float y, const char *texture);
@@ -21,6 +16,7 @@ class spSprite{
         // use a singleton instance of the game context so we don't have to
         // pass it anything
         void Draw(void *frame);
+        void Update(GLuint frame, int width, int height);
         void SetTransform(spm::vec2 position, float angle);
         spm::mat4 GetTransform();
         void SetScale(spm::vec2 newScale);
@@ -29,8 +25,6 @@ class spSprite{
         float GetAngle();
         void SetPosition(spm::vec2 pos);
         spm::vec2 GetPosition();
-        void AddAnimationFrames(char *frames[], int strcount);
-        void PlayAnimation(float elapsed);
         void Dealloc();
     private:
         void init(const char *texture);
@@ -42,8 +36,6 @@ class spSprite{
         spm::vec2 scale;
         GLuint shaderID, vertexbuffer, uvbuffer, vertexPosition_modelspaceID;
         GLuint vertexUVID, currentTexture, TextureID, MVPID;
-        animData *anims;
         GLuint shrink_filter, exp_filter;
-        int frameCounter, frameNum;
         spm::mat4 MVP;
 };

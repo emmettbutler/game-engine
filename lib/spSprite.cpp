@@ -22,32 +22,7 @@ void spSprite::setShaderParams(){
     this->exp_filter = GL_NEAREST;
 }
 
-void spSprite::AddAnimationFrames(char *frames[], int strcount){
-    for(int i = 0; i < strcount; i++){
-        this->anims[i].frame = loadPngImage(frames[i], this->anims[i].width, this->anims[i].height);
-    }
-    this->animTimer = 0;
-    this->frameNum = strcount - 1;
-    this->frameCounter = 0;
-    this->animRate = .8;
-}
 
-void spSprite::PlayAnimation(float elapsed){
-    if(elapsed < 0.0f) return;
-    this->animTimer += elapsed;
-    if(this->animTimer < this->animRate){
-        return;
-    }
-    this->animTimer = 0;
-
-    if(this->frameCounter < this->frameNum){
-        this->frameCounter++;
-    } else {
-        this->frameCounter = 0;
-    }
-    this->setupQuad(this->anims[this->frameCounter].width, this->anims[this->frameCounter].height);
-    this->currentTexture = this->anims[this->frameCounter].frame;
-}
 
 void spSprite::setupQuad(int width, int height){
     const GLfloat g_vertex_buffer_data[] = {
@@ -88,8 +63,6 @@ spSprite::spSprite(float x, float y, const char *texture){
     this->y = y;
 
     this->scale = spm::vec2(1.0f, 1.0f);
-
-    this->anims = new animData[3];
 
     this->translation = spm::translation(spm::vec3(x, y, 0.0f));
     this->rotation = spm::rotation(0.0f);
@@ -135,6 +108,11 @@ void spSprite::SetScale(spm::vec2 newScale){
 
 spm::vec2 spSprite::GetScale(){
     return this->scale;
+}
+
+void spSprite::Update(GLuint frame, int width, int height){
+    this->setupQuad(width, height);
+    this->currentTexture = frame;
 }
 
 void spSprite::Draw(void *frame){
