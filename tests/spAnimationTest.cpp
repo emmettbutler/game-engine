@@ -1,4 +1,5 @@
 #include <sys/time.h>
+#include <string.h>
 
 #include "spSprite.hpp"
 #include "spGame.hpp"
@@ -14,14 +15,17 @@ int main(){
     spm::vec2 viewDim = frame->GetViewDimensions();
     const char *tex;
 
-    char **anims = new char*[4];
-    anims[0] = "textures/Cop_Head_Dog_1.png";
-    anims[1] = "textures/BusinessHead_Dog_1.png";
-    anims[2] = "textures/Nudie_Head_Dog_1.png";
-    anims[3] = "textures/Jogger_Head_Dog_1.png";
+    char *anims[4];
+    for(int i = 0; i < 4; i++){
+        anims[i] = (char *)malloc(50 * sizeof(char));
+    }
+    strcpy(anims[0], "textures/Cop_Head_Dog_1.png");
+    strcpy(anims[1], "textures/BusinessHead_Dog_1.png");
+    strcpy(anims[2], "textures/Nudie_Head_Dog_1.png");
+    strcpy(anims[3], "textures/Jogger_Head_Dog_1.png");
 
     spSprite *sprite = new spSprite(viewDim.m[0]/2, viewDim.m[1]/2, "textures/Jogger_Head_Dog_1.png");
-    sprite->AddAnimationFrames(anims);
+    sprite->AddAnimationFrames(anims, sizeof(anims)/sizeof(anims[0]));
 
     int ttime = 0;
 
@@ -43,8 +47,8 @@ int main(){
         int nsec_elapsed = te.tv_nsec - ts.tv_nsec;
         sec_elapsed = nsec_elapsed / 1000000000.0f;
         if(ttime % 10 == 0 && sec_elapsed > 0){
-                printf("FPS: %0.2f\n", sec_elapsed * 1000.0f);
-                printf("\033[2J\033[1;1H");
+             //   printf("FPS: %0.2f\n", sec_elapsed * 1000.0f);
+             //   printf("\033[2J\033[1;1H");
         }
     } while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
         glfwGetWindowParam( GLFW_OPENED ) );

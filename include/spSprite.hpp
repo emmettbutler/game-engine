@@ -29,7 +29,7 @@ class spSprite{
         float GetAngle();
         void SetPosition(spm::vec2 pos);
         spm::vec2 GetPosition();
-        void AddAnimationFrames(char **frames);
+        void AddAnimationFrames(char *frames[], int strcount);
         void PlayAnimation(float elapsed);
         void Dealloc();
     private:

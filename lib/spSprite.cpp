@@ -22,12 +22,12 @@ void spSprite::setShaderParams(){
     this->exp_filter = GL_NEAREST;
 }
 
-void spSprite::AddAnimationFrames(char **frames){
-    for(int i = 0; i < 3; i++){
+void spSprite::AddAnimationFrames(char *frames[], int strcount){
+    for(int i = 0; i < strcount; i++){
         this->anims[i].frame = loadPngImage(frames[i], this->anims[i].width, this->anims[i].height);
     }
     this->animTimer = 0;
-    this->frameNum = 2;
+    this->frameNum = strcount - 1;
     this->frameCounter = 0;
     this->animRate = .8;
 }
